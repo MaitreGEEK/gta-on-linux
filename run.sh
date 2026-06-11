@@ -150,11 +150,9 @@ get_real_user_home() {
     u="$(logname 2>/dev/null || echo "${USER}")"
   fi
 
-  # getent dispo sur la plupart des distros; fallback simple sinon
   if command -v getent >/dev/null 2>&1; then
     getent passwd "$u" 2>/dev/null | awk -F: '{print $6}'
   else
-    # fallback approximatif
     printf '/home/%s\n' "$u"
   fi
 }
@@ -165,7 +163,6 @@ find_runtime_path() {
 
   local candidates=()
 
-  # chemins liés au HOME de l'utilisateur réel
   if [ -n "$user_home" ]; then
     candidates+=(
       "$user_home/.local/share/Steam/steamapps/common/Proton BattlEye Runtime"
@@ -174,14 +171,12 @@ find_runtime_path() {
     )
   fi
 
-  # fallback sur $HOME courant
   candidates+=(
     "$HOME/.local/share/Steam/steamapps/common/Proton BattlEye Runtime"
     "$HOME/.steam/steam/steamapps/common/Proton BattlEye Runtime"
     "$HOME/.var/app/com.valvesoftware.Steam/data/Steam/steamapps/common/Proton BattlEye Runtime"
   )
 
-  # chemin Deck explicite
   candidates+=(
     "/home/deck/.local/share/Steam/steamapps/common/Proton BattlEye Runtime"
   )
@@ -286,15 +281,15 @@ EOF
   printf '  2) Heroic\n'
   printf '  3) Lutris\n'
   printf '  4) Autre\n'
-  read -rp 'Choix [1-4] : ' launcher
+  read -rp 'Choix [1-4] : ' launcher </dev/tty   # <-- patch ici
 
   printf '\nTu joues à quelle(s) version(s) ?\n'
   printf '  1) Legacy seulement\n'
   printf '  2) Enhanced seulement\n'
   printf '  3) Legacy + Enhanced\n'
-  read -rp 'Choix [1-3] : ' version_choice
+  read -rp 'Choix [1-3] : ' version_choice </dev/tty   # <-- patch ici
 
-  read -rp $'\nEs-tu sur Steam Deck ? [y/N] : ' is_deck
+  read -rp $'\nEs-tu sur Steam Deck ? [y/N] : ' is_deck </dev/tty   # <-- patch ici
   is_deck="${is_deck:-N}"
 
   local prefix=""
