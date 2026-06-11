@@ -140,11 +140,49 @@ remove_rules() {
 }
 
 # === Détection Proton BattlEye Runtime ===
+
+get_real_user_home() {
+  local u
+
+  if [ -n "${SUDO_USER:-}" ] && [ "${SUDO_USER}" != "root" ]; then
+    u="${SUDO_USER}"
+  else
+    u="$(logname 2>/dev/null || echo "${USER}")"
+  fi
+
+  # getent dispo sur la plupart des distros; fallback simple sinon
+  if command -v getent >/dev/null 2>&1; then
+    getent passwd "$u" 2>/dev/null | awk -F: '{print $6}'
+  else
+    # fallback approximatif
+    printf '/home/%s\n' "$u"
+  fi
+}
+
 find_runtime_path() {
-  local candidates=(
+  local user_home
+  user_home="$(get_real_user_home || true)"
+
+  local candidates=()
+
+  # chemins liés au HOME de l'utilisateur réel
+  if [ -n "$user_home" ]; then
+    candidates+=(
+      "$user_home/.local/share/Steam/steamapps/common/Proton BattlEye Runtime"
+      "$user_home/.steam/steam/steamapps/common/Proton BattlEye Runtime"
+      "$user_home/.var/app/com.valvesoftware.Steam/data/Steam/steamapps/common/Proton BattlEye Runtime"
+    )
+  fi
+
+  # fallback sur $HOME courant
+  candidates+=(
     "$HOME/.local/share/Steam/steamapps/common/Proton BattlEye Runtime"
     "$HOME/.steam/steam/steamapps/common/Proton BattlEye Runtime"
     "$HOME/.var/app/com.valvesoftware.Steam/data/Steam/steamapps/common/Proton BattlEye Runtime"
+  )
+
+  # chemin Deck explicite
+  candidates+=(
     "/home/deck/.local/share/Steam/steamapps/common/Proton BattlEye Runtime"
   )
 
@@ -330,12 +368,6 @@ case "${ACTION}" in
     [ -f "${HOSTS_FILE}" ] || err "Fichier ${HOSTS_FILE} introuvable."
     apply_rules
     printf '\n--- Étape suivante : configuration du launcher / Proton BattlEye Runtime ---\n\n'
-    # helper ensuite sans exiger root (non nécessaire pour le reste)
-    # on relance le script en user normal si possible
-    sudo -u "$(logname 2>/dev/null || echo "${SUDO_USER:-$USER}")" bash "$0" _helper-internal || helper_mode
-    ;;
-  _helper-internal)
-    # mode interne pour relancer en user classique
     helper_mode
     ;;
   *)
