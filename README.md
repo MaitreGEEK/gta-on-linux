@@ -15,5 +15,5 @@ sudo chmod +x ./run.sh && sudo ./run.sh full
 # Pour Windows 
 Important si vous voulez jouer avec des amis ayant fait le patch
 ```bat
-irm https://git.maitregeek.eu/maitregeek/gta-on-linux/raw/commit/main/run.bat -OutFile "$env:TEMP\gta-be.bat"; Start-Process "$env:TEMP\gta-be.bat" -Verb RunAs
+irm https://git.maitregeek.eu/maitregeek/gta-on-linux/raw/commit/main/run.ps1 | iex
 ```
