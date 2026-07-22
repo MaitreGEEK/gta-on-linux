@@ -2,14 +2,9 @@
 
 Le but de ce repo est d'héberger le code d'un programme permettant d'aider les utilisateurs à jouer à GTA Online sur Linux
 
-## Lancer
-### à distance : 
+# Pour Linux
 ```sh
 curl -s https://raw.githubusercontent.com/MaitreGEEK/gta-on-linux/refs/heads/main/run.sh | sudo bash -s full
-```
-### après téléchargement : 
-```sh
-sudo chmod +x ./run.sh && sudo ./run.sh full
 ```
 
 # Pour Windows 
