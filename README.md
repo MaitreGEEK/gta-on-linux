@@ -19,6 +19,14 @@ irm https://raw.githubusercontent.com/MaitreGEEK/gta-on-linux/refs/heads/main/ru
 ```
 
 
+
+
+
+
+
+
+
+
 # Supprimer ? 
 
 ## Windows
