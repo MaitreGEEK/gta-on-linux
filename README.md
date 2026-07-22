@@ -18,14 +18,8 @@ Important si vous voulez jouer avec des amis ayant fait le patch
 irm https://raw.githubusercontent.com/MaitreGEEK/gta-on-linux/refs/heads/main/run.sh | iex
 ```
 
-
-
-
-
-
-
-
-
+# Donations
+Si vous souhaitez me faire un petit geste suivez ce lien : https://donate.maitregeek.eu
 
 # Supprimer ? 
 
