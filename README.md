@@ -10,7 +10,7 @@ curl -s https://raw.githubusercontent.com/MaitreGEEK/gta-on-linux/refs/heads/mai
 # Pour Windows 
 Important si vous voulez jouer avec des amis ayant fait le patch
 ```bat
-irm https://raw.githubusercontent.com/MaitreGEEK/gta-on-linux/refs/heads/main/run.sh | iex
+irm https://raw.githubusercontent.com/MaitreGEEK/gta-on-linux/refs/heads/main/run.ps1 | iex
 ```
 
 # Donations
